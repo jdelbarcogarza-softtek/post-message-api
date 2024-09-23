@@ -11,7 +11,7 @@ export default function Home() {
 
         <iframe
           id="target-iframe"
-          src="http://localhost:5173/"
+          src="https://nice-ground-079198510.5.azurestaticapps.net"
           className="min-h-screen w-full h-full"
         />
       </main>
