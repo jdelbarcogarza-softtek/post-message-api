@@ -9,11 +9,27 @@ export default function Home() {
           <ImssDataInput />
         </div>
 
-        <iframe
+    {/* prod */}
+        {/* <iframe
           id="target-iframe"
           src="https://nice-ground-079198510.5.azurestaticapps.net"
           className="min-h-screen w-full h-full"
-        />
+        /> 
+        */}
+
+        {/* hosted dev */}
+        {/* <iframe
+          id="target-iframe"
+          src="https://black-sky-0bcfa8610.5.azurestaticapps.net/"
+          className="min-h-screen w-full h-full"
+        />  */}
+
+        {/* localhost */}
+        <iframe
+          id="target-iframe"
+          src="http://localhost:5173/"
+          className="min-h-screen w-full h-full"
+        /> 
       </main>
     </div>
   );

@@ -1,8 +1,14 @@
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 
-const ImssDataInput = () => {
+interface Props {
+  enableAvo?: boolean; // desplegar input con funcionalidad de demo AVO.
+  generateUrlCallback?: (value: string) => void;
+}
+
+const ImssDataInput: React.FC<Props> = ({ enableAvo, generateUrlCallback }) => {
+  const [redirectUrl, setRedirectUrl] = useState("");
   const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -10,17 +16,39 @@ const ImssDataInput = () => {
     const formData = new FormData(e.currentTarget);
 
     // Extract individual values using get()
-    const nss = formData.get("nss");
-    const agregado = formData.get("agregado");
+    const nss = formData.get("nss") as string;
+    const agregado = formData.get("agregado") as string;
 
-      // Get the iframe element and its contentWindow
-      const iframe = document.getElementById("target-iframe") as HTMLIFrameElement;
-      if (iframe && iframe.contentWindow) {
-        // Post message to the iframe's window
-        iframe.contentWindow.postMessage({ nss, agregado }, "http://localhost:5173");
-      } else {
-        console.error("Iframe not found or contentWindow is not accessible.");
-      }
+    const IS_LOCALHOST = window.location.hostname === "localhost";
+
+    // define target url
+    const targetUrl = IS_LOCALHOST
+      ? "http://localhost:5173"
+      : "falta definir ambientes correctamente";
+
+    if (enableAvo) {
+      const urlObj = new URL(targetUrl + "?");
+
+      urlObj.searchParams.set("nss", nss?.toString());
+      urlObj.searchParams.set("agregado", agregado?.toString());
+
+      // Funcionalida de AVO genera URl para abrir nuevo tab
+      setRedirectUrl(urlObj.toString());
+      if (generateUrlCallback) generateUrlCallback(urlObj.toString());
+    }
+
+    // Get the iframe element and its contentWindow
+    const iframe = document.getElementById(
+      "target-iframe"
+    ) as HTMLIFrameElement;
+    if (iframe && iframe.contentWindow) {
+      // Post message to the iframe's window
+
+      // TODO: cambiar url para hacer post del mensaje dependiendo del ambiente.
+      iframe.contentWindow.postMessage({ nss, agregado }, targetUrl);
+    } else {
+      console.error("Iframe not found or contentWindow is not accessible.");
+    }
 
     console.log({ nss, agregado });
   };
