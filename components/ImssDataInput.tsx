@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent } from "react";
 
 interface Props {
   enableAvo?: boolean; // desplegar input con funcionalidad de demo AVO.
@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ImssDataInput: React.FC<Props> = ({ enableAvo, generateUrlCallback }) => {
-  const [redirectUrl, setRedirectUrl] = useState("");
   const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -33,7 +32,7 @@ const ImssDataInput: React.FC<Props> = ({ enableAvo, generateUrlCallback }) => {
       urlObj.searchParams.set("agregado", agregado?.toString());
 
       // Funcionalida de AVO genera URl para abrir nuevo tab
-      setRedirectUrl(urlObj.toString());
+     
       if (generateUrlCallback) generateUrlCallback(urlObj.toString());
     }
 
