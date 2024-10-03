@@ -23,7 +23,7 @@ const ImssDataInput: React.FC<Props> = ({ enableAvo, generateUrlCallback }) => {
     // define target url
     const targetUrl = IS_LOCALHOST
       ? "http://localhost:5173"
-      : "falta definir ambientes correctamente";
+      : "https://nice-ground-079198510.5.azurestaticapps.net";
 
     if (enableAvo) {
       const urlObj = new URL(targetUrl + "?");
